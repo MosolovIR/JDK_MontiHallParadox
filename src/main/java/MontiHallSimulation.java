@@ -7,6 +7,7 @@ public class MontiHallSimulation {
     private final Random random = new Random();
     private final Map<Integer, Boolean> keepChoiceResults = new HashMap();
     private final Map<Integer, Boolean> switchChoiceResults = new HashMap();
+    private final Map<Integer, String> testResults = new HashMap<>();
 
     public void startGame() {
         for (int i = 0; i < TOTAL_ATTEMPTS; ++i) {
@@ -14,6 +15,8 @@ public class MontiHallSimulation {
             boolean winWithSwitch = playGame(true);
             keepChoiceResults.put(i, winWithKeep);
             switchChoiceResults.put(i, winWithSwitch);
+
+            testResults.put(i, "Шаг " + (i + 1) + ": Победа при сохранении выбора: " + winWithKeep + ", Победа при смене выбора: " + winWithSwitch);
         }
 
         printResults();
@@ -42,5 +45,9 @@ public class MontiHallSimulation {
         long switchWins = switchChoiceResults.values().stream().filter((win) -> win).count();
         System.out.println("Стратегия без смены выбора: Победы = " + keepWins + ", Поражения = " + (1000L - keepWins));
         System.out.println("Стратегия со сменой выбора: Победы = " + switchWins + ", Поражения = " + (1000L - switchWins));
+
+        for (Map.Entry<Integer, String> entry : testResults.entrySet()) {
+            System.out.println(entry.getValue());
+        }
     }
 }
